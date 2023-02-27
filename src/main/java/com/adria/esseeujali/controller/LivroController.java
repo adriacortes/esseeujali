@@ -2,11 +2,11 @@ package com.adria.esseeujali.controller;
 
 import com.adria.esseeujali.dto.LivroDto;
 import com.adria.esseeujali.mapper.LivroMapper;
-import com.adria.esseeujali.mapper.UsuarioMapper;
 import com.adria.esseeujali.model.Livro;
 import com.adria.esseeujali.service.LivroService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +23,14 @@ import java.util.stream.Collectors;
 @RequestMapping("esseeujali")
 public class LivroController {
 
+    @Autowired
     private LivroService service;
+    @Autowired
     private LivroMapper livroMapper;
 
+    public LivroController() {
+
+    }
     public LivroController(LivroService service, LivroMapper livroMapper) {
         this.service = service;
         this.livroMapper = livroMapper;

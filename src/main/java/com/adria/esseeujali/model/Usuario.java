@@ -2,38 +2,56 @@ package com.adria.esseeujali.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
 
 
 @Entity
 public class  Usuario {
 
-    public Usuario() {
-    }
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-    @Column(name = "email")
+    @GeneratedValue
+    @Column(name="id")
+    private Integer id;
+
+    String nome;
+    @Column(name = "username")
     String email;
-    @Column(name = "senha")
+    @Column(name = "password")
     String senha;
     @CreationTimestamp
     @Column(name = "data_cadastro",nullable = false, updatable = false, columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP")
     private LocalDate dataCadastro;
 
-//    @UpdateTimestamp
-//    @Column(name = "data_alteracao",columnDefinition="TIMESTAMP update CURRENT_TIMESTAMP")
-//    private LocalDate dataAlteracao;
+    public Usuario() {
+    }
 
-    public Long getId() {
+    public Usuario(Integer id, String nome, String email, String senha, LocalDate dataCadastro, List<Role> roles) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.dataCadastro = dataCadastro;
+
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -68,5 +86,21 @@ public class  Usuario {
                 ", senha='" + senha + '\'' +
                 ", dataCadastro=" + dataCadastro +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(id, usuario.id) && Objects.equals(nome, usuario.nome) && Objects.equals(email, usuario.email) && Objects.equals(senha, usuario.senha) && Objects.equals(dataCadastro, usuario.dataCadastro);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, email, senha, dataCadastro);
+    }
+
+    public static interface LivroSelecionadoParaLeituraRepository extends JpaRepository<LivroSelecionadoParaLeitura, LivroSelecionado> {
     }
 }

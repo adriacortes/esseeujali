@@ -1,5 +1,7 @@
 package com.adria.esseeujali.dto;
 
+import java.util.Objects;
+
 public class LivroDto {
     private long Id;
     private String autor;
@@ -9,9 +11,16 @@ public class LivroDto {
     private String conteudo;
 
     private String genero;
-    private Boolean lido=false;
+
 
     public LivroDto() {
+    }
+
+    public LivroDto(long id, String autor, Integer paginas, String titulo) {
+        Id = id;
+        this.autor = autor;
+        this.paginas = paginas;
+        this.titulo = titulo;
     }
 
     public long getId() {
@@ -70,11 +79,16 @@ public class LivroDto {
         this.genero = genero;
     }
 
-    public Boolean getLido() {
-        return lido;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LivroDto livroDto = (LivroDto) o;
+        return Id == livroDto.Id && Objects.equals(autor, livroDto.autor) && Objects.equals(paginas, livroDto.paginas) && Objects.equals(titulo, livroDto.titulo) && Objects.equals(resumo, livroDto.resumo) && Objects.equals(conteudo, livroDto.conteudo) && Objects.equals(genero, livroDto.genero);
     }
 
-    public void setLido(Boolean lido) {
-        this.lido = lido;
+    @Override
+    public int hashCode() {
+        return Objects.hash(Id, autor, paginas, titulo, resumo, conteudo, genero);
     }
 }

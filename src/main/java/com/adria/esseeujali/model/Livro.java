@@ -5,29 +5,41 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.util.Objects;
+
 @Entity
 public class Livro {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    private long Id;
+    private Integer Id;
     private String autor;
     private Integer paginas;
     private String titulo;
     private String resumo;
     private String conteudo;
     private String genero;
-    private Boolean lido;
+
 
     public Livro() {
 
     }
 
-    public long getId() {
+    public Livro(Integer id, String autor, Integer paginas, String titulo, String resumo, String conteudo, String genero) {
+        Id = id;
+        this.autor = autor;
+        this.paginas = paginas;
+        this.titulo = titulo;
+        this.resumo = resumo;
+        this.conteudo = conteudo;
+        this.genero = genero;
+    }
+
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         Id = id;
     }
 
@@ -77,13 +89,5 @@ public class Livro {
 
     public void setGenero(String genero) {
         this.genero = genero;
-    }
-
-    public Boolean getLido() {
-        return lido;
-    }
-
-    public void setLido(Boolean lido) {
-        this.lido = lido;
     }
 }
