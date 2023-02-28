@@ -11,6 +11,9 @@ public class LivroSelecionadoParaLeitura {
   public LivroSelecionado livroSelecionadoPk;
   Boolean lido;
 
+  Integer pontuacao;
+
+
     public LivroSelecionadoParaLeitura() {
     }
 
@@ -33,5 +36,13 @@ public class LivroSelecionadoParaLeitura {
 
     public void setLido(Boolean lido) {
         this.lido = lido;
+    }
+
+    public Integer getPontuacao() {
+        return pontuacao;
+    }
+
+    public void setPontuacao(Integer pontuacao) {
+        this.pontuacao = pontuacao;
     }
 }

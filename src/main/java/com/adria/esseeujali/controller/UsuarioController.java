@@ -2,7 +2,8 @@ package com.adria.esseeujali.controller;
 
 import com.adria.esseeujali.dto.LivroSelecionadoParaLeituraDto;
 import com.adria.esseeujali.dto.UsuarioDto;
-import com.adria.esseeujali.exception.LivroNaoEncontradoException;
+import com.adria.esseeujali.exception.livroNaoEncontradoException;
+import com.adria.esseeujali.exception.usuarioSemLivroNaListaDeLeituraException;
 import com.adria.esseeujali.exception.UsuarioNaoEncontradoException;
 import com.adria.esseeujali.mapper.UsuarioMapper;
 import com.adria.esseeujali.model.Usuario;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,9 +98,25 @@ public class UsuarioController {
         return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
     }
 
-    @ExceptionHandler(LivroNaoEncontradoException.class)
-    private ResponseEntity<Object> livroNaoEncontrado(LivroNaoEncontradoException exception){
+    @ExceptionHandler(livroNaoEncontradoException.class)
+    private ResponseEntity<Object> livroNaoEncontrado(livroNaoEncontradoException exception){
      return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
     }
+
+    @PutMapping("/livrolido")
+    public ResponseEntity<String> adicionaPontuacaoPorLivroLIdo(@RequestBody LivroSelecionadoParaLeituraDto livroFinalizadoLeitura){
+
+        service.gerandoPontuacaoPorLeituraFinalizada(livroFinalizadoLeitura);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Dados registrados com sucesso.");
+    }
+
+    @ExceptionHandler(usuarioSemLivroNaListaDeLeituraException.class)
+    private ResponseEntity<Object> livroNaoConstaNaListaDeLeitura(usuarioSemLivroNaListaDeLeituraException exception){
+        return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
+    }
+
+
+
+
 
 }
