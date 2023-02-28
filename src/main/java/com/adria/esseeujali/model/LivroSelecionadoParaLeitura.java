@@ -8,23 +8,23 @@ import jakarta.persistence.Entity;
 public class LivroSelecionadoParaLeitura {
 
   @EmbeddedId
-  public LivroSelecionado livroSelecionado;
+  public LivroSelecionado livroSelecionadoPk;
   Boolean lido;
 
     public LivroSelecionadoParaLeitura() {
     }
 
     public LivroSelecionadoParaLeitura(LivroSelecionado livroSelecionado, Boolean lido) {
-        this.livroSelecionado = livroSelecionado;
+        this.livroSelecionadoPk = livroSelecionado;
         this.lido = lido;
     }
 
-    public LivroSelecionado getLivroSelecionado() {
-        return livroSelecionado;
+    public LivroSelecionado getLivroSelecionadoPk() {
+        return livroSelecionadoPk;
     }
 
-    public void setLivroSelecionado(LivroSelecionado livroSelecionado) {
-        this.livroSelecionado = livroSelecionado;
+    public void setLivroSelecionadoPk(LivroSelecionado livroSelecionadoPk) {
+        this.livroSelecionadoPk = livroSelecionadoPk;
     }
 
     public Boolean getLido() {
