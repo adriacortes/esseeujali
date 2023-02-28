@@ -1,6 +1,7 @@
 package com.adria.esseeujali.service;
 
 import com.adria.esseeujali.dto.LivroSelecionadoParaLeituraDto;
+import com.adria.esseeujali.exception.PontuacaoJaGeradaParaEsteLivroException;
 import com.adria.esseeujali.exception.usuarioSemLivroNaListaDeLeituraException;
 import com.adria.esseeujali.exception.UsuarioNaoEncontradoException;
 import com.adria.esseeujali.exception.livroNaoEncontradoException;
@@ -68,11 +69,15 @@ public class UsuarioService {
 
     public void gerandoPontuacaoPorLeituraFinalizada(LivroSelecionadoParaLeituraDto lista){
 
+
         //verifica se existe o livro na lista de leitura do usuario.
         LivroSelecionado livroSelecionadoPk = new LivroSelecionado(lista.getIdUsuario(),lista.getIdLivro());
         LivroSelecionadoParaLeitura selecionado =
                 livroSelecionadoParaLeitura.findById(livroSelecionadoPk).orElseThrow(() -> new usuarioSemLivroNaListaDeLeituraException());
 
+        if(selecionado.getLido() == true){
+            throw new PontuacaoJaGeradaParaEsteLivroException();
+        }
         //retorna o livro marcado como lido
         Livro livro = livroRepository.findById(lista.getIdLivro());
         double paginasDoLivro = livro.getPaginas();
@@ -86,7 +91,6 @@ public class UsuarioService {
         selecionado.setLido(lista.isLido());
         selecionado.setPontuacao(ponto);
         livroSelecionadoParaLeitura.save(selecionado);
-
 
     }
 

@@ -2,6 +2,7 @@ package com.adria.esseeujali.controller;
 
 import com.adria.esseeujali.dto.LivroSelecionadoParaLeituraDto;
 import com.adria.esseeujali.dto.UsuarioDto;
+import com.adria.esseeujali.exception.PontuacaoJaGeradaParaEsteLivroException;
 import com.adria.esseeujali.exception.livroNaoEncontradoException;
 import com.adria.esseeujali.exception.usuarioSemLivroNaListaDeLeituraException;
 import com.adria.esseeujali.exception.UsuarioNaoEncontradoException;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @CrossOrigin("*")
@@ -113,6 +115,11 @@ public class UsuarioController {
     @ExceptionHandler(usuarioSemLivroNaListaDeLeituraException.class)
     private ResponseEntity<Object> livroNaoConstaNaListaDeLeitura(usuarioSemLivroNaListaDeLeituraException exception){
         return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
+    }
+
+    @ExceptionHandler(PontuacaoJaGeradaParaEsteLivroException.class)
+    private ResponseEntity<Object> pontuacaoJaGeradaParaEsteLivro(PontuacaoJaGeradaParaEsteLivroException exception){
+        return ResponseEntity.status(BAD_REQUEST).body(exception.getMessage());
     }
 
 
