@@ -1,11 +1,13 @@
 package com.adria.esseeujali.model;
 
+import com.adria.esseeujali.tipoenum.GeneroEnum;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
-import java.util.Objects;
 
 @Entity
 public class Livro {
@@ -18,20 +20,30 @@ public class Livro {
     private String titulo;
     private String resumo;
     private String conteudo;
-    private String genero;
 
+    @Column(name = "genero")
+    @Enumerated(EnumType.STRING)
+    private GeneroEnum genero;
 
     public Livro() {
 
     }
 
-    public Livro(Integer id, String autor, Integer paginas, String titulo, String resumo, String conteudo, String genero) {
+    public Livro(Integer id, String autor, Integer paginas, String titulo, String resumo, String conteudo, GeneroEnum genero) {
         Id = id;
         this.autor = autor;
         this.paginas = paginas;
         this.titulo = titulo;
         this.resumo = resumo;
         this.conteudo = conteudo;
+        this.genero = genero;
+    }
+
+    public GeneroEnum getGenero() {
+        return genero;
+    }
+
+    public void setGenero(GeneroEnum genero) {
         this.genero = genero;
     }
 
@@ -83,11 +95,5 @@ public class Livro {
         this.conteudo = conteudo;
     }
 
-    public String getGenero() {
-        return genero;
-    }
 
-    public void setGenero(String genero) {
-        this.genero = genero;
-    }
 }

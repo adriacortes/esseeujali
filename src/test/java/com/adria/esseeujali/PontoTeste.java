@@ -12,13 +12,7 @@ public class PontoTeste {
 
     @Test
     void retonar1PontoParaOUsuario(){
-        UsuarioDto usuarioDto = new UsuarioDto(1,"Adria Aline","adria.aline@gmail.com","123");
-        LivroDto livroDto = new LivroDto(1,"Jhon Lenon",200,"Amanhecer");
 
-        boolean livroLido;
-
-
-        //assertEquals(true,livroLido);
 
     }
 }

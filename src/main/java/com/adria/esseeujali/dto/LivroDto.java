@@ -1,5 +1,7 @@
 package com.adria.esseeujali.dto;
 
+import com.adria.esseeujali.tipoenum.GeneroEnum;
+
 import java.util.Objects;
 
 public class LivroDto {
@@ -10,17 +12,20 @@ public class LivroDto {
     private String resumo;
     private String conteudo;
 
-    private String genero;
+    private GeneroEnum genero;
 
 
     public LivroDto() {
     }
 
-    public LivroDto(long id, String autor, Integer paginas, String titulo) {
+    public LivroDto(long id, String autor, Integer paginas, String titulo, String resumo, String conteudo, GeneroEnum genero) {
         Id = id;
         this.autor = autor;
         this.paginas = paginas;
         this.titulo = titulo;
+        this.resumo = resumo;
+        this.conteudo = conteudo;
+        this.genero = genero;
     }
 
     public long getId() {
@@ -71,11 +76,11 @@ public class LivroDto {
         this.conteudo = conteudo;
     }
 
-    public String getGenero() {
+    public GeneroEnum getGenero() {
         return genero;
     }
 
-    public void setGenero(String genero) {
+    public void setGenero(GeneroEnum genero) {
         this.genero = genero;
     }
 
@@ -84,7 +89,7 @@ public class LivroDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LivroDto livroDto = (LivroDto) o;
-        return Id == livroDto.Id && Objects.equals(autor, livroDto.autor) && Objects.equals(paginas, livroDto.paginas) && Objects.equals(titulo, livroDto.titulo) && Objects.equals(resumo, livroDto.resumo) && Objects.equals(conteudo, livroDto.conteudo) && Objects.equals(genero, livroDto.genero);
+        return Id == livroDto.Id && Objects.equals(autor, livroDto.autor) && Objects.equals(paginas, livroDto.paginas) && Objects.equals(titulo, livroDto.titulo) && Objects.equals(resumo, livroDto.resumo) && Objects.equals(conteudo, livroDto.conteudo) && genero == livroDto.genero;
     }
 
     @Override
