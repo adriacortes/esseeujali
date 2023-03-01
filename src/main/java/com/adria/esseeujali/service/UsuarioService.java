@@ -15,8 +15,6 @@ import com.adria.esseeujali.repository.LivroSelecionadoParaLeituraRepository;
 import com.adria.esseeujali.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -79,24 +77,29 @@ public class UsuarioService {
     }
 
     public void marcaLivroComoLidoGerandoPontuacao(Integer idUsuario, Integer idLivro, LivroSelecionadoParaLeituraDto lista) {
+
         LivroSelecionadoParaLeitura livroSelecionadoParaLeitura =
-                livroSelecionadoParaLeituraRepository.findById(new LivroSelecionadoPK(idUsuario, idLivro)).orElseThrow(UsuarioSemLivroNaListaDeLeituraException::new);
+                livroSelecionadoParaLeituraRepository.findById
+                                (new LivroSelecionadoPK(idUsuario, idLivro))
+                        .orElseThrow(UsuarioSemLivroNaListaDeLeituraException::new);
 
         verificaSeLivroJaFoiLido(livroSelecionadoParaLeitura);
 
-        //retorna o livro marcado como lido
-        Livro livro = livroService.findById(idLivro);
-        int paginasDoLivro = livro.getPaginas();
-        int verificaCentena = paginasDoLivro / 100; //VER QUESTAO DO ARREDONDAMENTO 3.94 = 4
-        DecimalFormat formato = new DecimalFormat("#");
-        //verificaCentena= Double.valueOf(formato.format(verificaCentena));
-        int ponto = 1;
-        ponto += verificaCentena;
 
-        //salva pontos na lista de livro de leitura do usuario
+        int ponto = geraPontuacao(idLivro);
+
         livroSelecionadoParaLeitura.setLido(lista.isLido());
         livroSelecionadoParaLeitura.setPontuacao(ponto);
         livroSelecionadoParaLeituraRepository.save(livroSelecionadoParaLeitura);
+    }
+
+    private int geraPontuacao(Integer idLivro) {
+        Livro livro = livroService.findById(idLivro);
+        int paginasDoLivro = livro.getPaginas();
+        int verificaCentena = paginasDoLivro / 100;
+        int ponto = 1;
+        ponto += verificaCentena;
+        return ponto;
     }
 
     private static void verificaSeLivroJaFoiLido(LivroSelecionadoParaLeitura livroSelecionadoParaLeitura) {
@@ -106,7 +109,7 @@ public class UsuarioService {
     }
 
     public List<Trofeu> retornarTrofeuDeUsuario(int id) {
-        List<Trofeu> listaTrofeus = new ArrayList<>();
+        List<Trofeu> listaTrofeus;
         listaTrofeus = livroSelecionadoParaLeituraRepository.buscarTrofeuDoUsuario(id);
 
         return listaTrofeus;

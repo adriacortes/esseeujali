@@ -8,18 +8,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 public class Livro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer Id;
     private String autor;
     private Integer paginas;
@@ -38,7 +32,7 @@ public class Livro {
 //    private Set<Usuario> usuarios = new HashSet<>();
 
     public Livro() {
-
+      
     }
 
     public Livro(Integer id, String autor, Integer paginas, String titulo, String resumo, String conteudo, GeneroEnum genero) {
@@ -49,6 +43,7 @@ public class Livro {
         this.resumo = resumo;
         this.conteudo = conteudo;
         this.genero = genero;
+
     }
 
     public GeneroEnum getGenero() {

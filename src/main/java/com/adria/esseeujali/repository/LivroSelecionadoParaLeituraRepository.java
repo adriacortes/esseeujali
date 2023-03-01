@@ -14,6 +14,6 @@ public interface LivroSelecionadoParaLeituraRepository extends JpaRepository<Liv
 //            "where ll.id_usuario=:id" +
 //            " group by l.genero having total > 5",nativeQuery = true)
 
-    @Query("SELECT l.genero,1 as total FROM LivroSelecionadoParaLeitura ll  join Livro l")
+    @Query(value = "SELECT l.genero,count(*) as total FROM LivroSelecionadoParaLeitura ll  join Livro l")
     List<Trofeu> buscarTrofeuDoUsuario(int id);
 }
