@@ -3,16 +3,16 @@ package com.adria.esseeujali.controller;
 import com.adria.esseeujali.dto.LivroSelecionadoParaLeituraDto;
 import com.adria.esseeujali.dto.UsuarioDto;
 import com.adria.esseeujali.exception.PontuacaoJaGeradaParaEsteLivroException;
-import com.adria.esseeujali.exception.livroNaoEncontradoException;
-import com.adria.esseeujali.exception.usuarioSemLivroNaListaDeLeituraException;
 import com.adria.esseeujali.exception.UsuarioNaoEncontradoException;
+import com.adria.esseeujali.exception.UsuarioSemLivroNaListaDeLeituraException;
+import com.adria.esseeujali.exception.livroNaoEncontradoException;
 import com.adria.esseeujali.mapper.UsuarioMapper;
+import com.adria.esseeujali.model.LivroSelecionadoParaLeitura;
 import com.adria.esseeujali.model.Trofeu;
 import com.adria.esseeujali.model.Usuario;
 import com.adria.esseeujali.repository.UsuarioRepository;
 import com.adria.esseeujali.service.CreateRoleUserService;
 import com.adria.esseeujali.service.UsuarioService;
-import jakarta.persistence.Tuple;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,7 +42,7 @@ public class UsuarioController {
     private CreateRoleUserService createRoleUserService;
     private final UsuarioRepository usuarioRepository;
 
-    public UsuarioController(UsuarioService service, UsuarioMapper usuarioMapper,CreateRoleUserService createRoleUserService,
+    public UsuarioController(UsuarioService service, UsuarioMapper usuarioMapper, CreateRoleUserService createRoleUserService,
                              UsuarioRepository usuarioRepository) {
         this.service = service;
         this.usuarioMapper = usuarioMapper;
@@ -51,7 +51,7 @@ public class UsuarioController {
     }
 
     @PostMapping()
-    public ResponseEntity<UsuarioDto> cadastrar(@RequestBody UsuarioDto usuarioDto){
+    public ResponseEntity<UsuarioDto> cadastrar(@RequestBody UsuarioDto usuarioDto) {
 
         Usuario usuario = usuarioMapper.toEntity(usuarioDto);
 
@@ -66,7 +66,7 @@ public class UsuarioController {
 
     private ResponseEntity<UsuarioDto> verificaSeJaTemUsuarioRegistradoPeloEmail(Usuario usuario) {
         Usuario existeUsuario = service.findByemail(usuario);
-        if (existeUsuario != null){
+        if (existeUsuario != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(usuarioMapper.toDto(existeUsuario));
         }
         return null;
@@ -80,7 +80,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/autenticacao")
-    public  ResponseEntity<UsuarioDto> loginUsuario(@RequestParam String email){
+    public ResponseEntity<UsuarioDto> loginUsuario(@RequestParam String email) {
 
         //Usuario usuario = usuarioMapper.toEntity(usuarioDto);
         Usuario usuario = new Usuario();
@@ -92,50 +92,49 @@ public class UsuarioController {
     }
 
     @PostMapping("/livros")
-    public ResponseEntity<String> adicionaLivroNaListaDeLeitura(@RequestBody LivroSelecionadoParaLeituraDto livroSelecionado) {
+    public ResponseEntity<String> adicionaLivroNaListaDeLeitura(@RequestBody LivroSelecionadoParaLeitura livroSelecionado) {
 
-       // service.adicionaLivroNaListaDeLeitura(livroSelecionado);
+        service.adicionaLivroNaListaDeLeitura(livroSelecionado);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Dados registrados com sucesso.");
 
     }
 
     @ExceptionHandler(UsuarioNaoEncontradoException.class)
-    private ResponseEntity<Object> usuarioNaoExiste(UsuarioNaoEncontradoException exception){
+    private ResponseEntity<Object> usuarioNaoExiste(UsuarioNaoEncontradoException exception) {
         return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
     }
 
     @ExceptionHandler(livroNaoEncontradoException.class)
-    private ResponseEntity<Object> livroNaoEncontrado(livroNaoEncontradoException exception){
-     return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
+    private ResponseEntity<Object> livroNaoEncontrado(livroNaoEncontradoException exception) {
+        return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
     }
 
-    @PutMapping("/livrolido")
-    public ResponseEntity<String> adicionaPontuacaoPorLivroLIdo(@RequestBody LivroSelecionadoParaLeituraDto livroFinalizadoLeitura){
+    @PutMapping("/{idUsuario}/livrolido/{idLivro}")
+    public ResponseEntity<String> alterarLivroDaListaDoUsuarioComoLido(@PathVariable Integer idUsuario,
+                                                                       @PathVariable Integer idLivro,
+                                                                       @RequestBody LivroSelecionadoParaLeituraDto livroFinalizadoLeitura) {
 
-        service.gerandoPontuacaoPorLeituraFinalizada(livroFinalizadoLeitura);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Dados registrados com sucesso.");
+        service.marcaLivroComoLidoGerandoPontuacao(idUsuario, idLivro, livroFinalizadoLeitura);
+        return ResponseEntity.status(HttpStatus.OK).body("Dados registrados com sucesso.");
     }
 
-    @ExceptionHandler(usuarioSemLivroNaListaDeLeituraException.class)
-    private ResponseEntity<Object> livroNaoConstaNaListaDeLeitura(usuarioSemLivroNaListaDeLeituraException exception){
+    @ExceptionHandler(UsuarioSemLivroNaListaDeLeituraException.class)
+    private ResponseEntity<Object> livroNaoConstaNaListaDeLeitura(UsuarioSemLivroNaListaDeLeituraException exception) {
         return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
     }
 
     @ExceptionHandler(PontuacaoJaGeradaParaEsteLivroException.class)
-    private ResponseEntity<Object> pontuacaoJaGeradaParaEsteLivro(PontuacaoJaGeradaParaEsteLivroException exception){
+    private ResponseEntity<Object> pontuacaoJaGeradaParaEsteLivro(PontuacaoJaGeradaParaEsteLivroException exception) {
         return ResponseEntity.status(BAD_REQUEST).body(exception.getMessage());
     }
 
     @GetMapping("/{id}/trofeus")
-    public ResponseEntity<List<Trofeu>> adicionaarTrofeuAoUsuario(@PathVariable int id){
+    public ResponseEntity<List<Trofeu>> adicionaarTrofeuAoUsuario(@PathVariable int id) {
         List<Trofeu> listaTrofeus = new ArrayList<>();
         listaTrofeus = service.retornarTrofeuDeUsuario(id);
         return ResponseEntity.status(HttpStatus.CREATED).body(listaTrofeus);
     }
-
-
-
 
 
 }

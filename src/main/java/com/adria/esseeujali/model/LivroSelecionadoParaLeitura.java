@@ -11,7 +11,7 @@ import jakarta.persistence.MapsId;
 public class LivroSelecionadoParaLeitura {
 
     @EmbeddedId
-    public LivroSelecionadoPK livroSelecionadoPk;
+    public LivroSelecionadoPK livroSelecionadoPk ;
 
     @ManyToOne
     @MapsId("usuarioId")
@@ -28,13 +28,30 @@ public class LivroSelecionadoParaLeitura {
 
     Integer pontuacao;
 
-
-    public LivroSelecionadoParaLeitura() {
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public LivroSelecionadoParaLeitura(LivroSelecionadoPK livroSelecionadoPK, Boolean lido) {
-        this.livroSelecionadoPk = livroSelecionadoPK;
-        this.lido = lido;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
+    public LivroSelecionadoParaLeitura() {
+        this.livroSelecionadoPk = new LivroSelecionadoPK();
+    }
+
+    public LivroSelecionadoParaLeitura(LivroSelecionadoPK livroSelecionadoPk) {
+        this.livroSelecionadoPk = livroSelecionadoPk;
+        this.lido = false;
+        this.pontuacao = 0;
     }
 
     public LivroSelecionadoPK getLivroSelecionadoPk() {
@@ -59,5 +76,9 @@ public class LivroSelecionadoParaLeitura {
 
     public void setPontuacao(Integer pontuacao) {
         this.pontuacao = pontuacao;
+    }
+
+    public Boolean jaLido(){
+        return this.lido;
     }
 }

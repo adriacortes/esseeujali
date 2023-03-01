@@ -2,11 +2,6 @@ package com.adria.esseeujali.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -21,7 +16,11 @@ public class LivroSelecionadoPK implements Serializable {
     private Integer livroId;
 
     public LivroSelecionadoPK() {
+    }
 
+    public LivroSelecionadoPK(Integer usuarioId, Integer livroId) {
+        this.usuarioId = usuarioId;
+        this.livroId = livroId;
     }
 
     public Integer getUsuarioId() {
