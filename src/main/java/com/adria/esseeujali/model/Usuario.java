@@ -29,13 +29,11 @@ public class  Usuario {
     public Usuario() {
     }
 
-    public Usuario(Integer id, String nome, String email, String senha, LocalDate dataCadastro, List<Role> roles) {
+    public Usuario(Integer id, String nome, String email, String senha) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.dataCadastro = dataCadastro;
-
     }
 
     public Integer getId() {
@@ -101,6 +99,5 @@ public class  Usuario {
         return Objects.hash(id, nome, email, senha, dataCadastro);
     }
 
-    public static interface LivroSelecionadoParaLeituraRepository extends JpaRepository<LivroSelecionadoParaLeitura, LivroSelecionado> {
-    }
+
 }

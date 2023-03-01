@@ -7,10 +7,12 @@ import com.adria.esseeujali.exception.livroNaoEncontradoException;
 import com.adria.esseeujali.exception.usuarioSemLivroNaListaDeLeituraException;
 import com.adria.esseeujali.exception.UsuarioNaoEncontradoException;
 import com.adria.esseeujali.mapper.UsuarioMapper;
+import com.adria.esseeujali.model.Trofeu;
 import com.adria.esseeujali.model.Usuario;
 import com.adria.esseeujali.repository.UsuarioRepository;
 import com.adria.esseeujali.service.CreateRoleUserService;
 import com.adria.esseeujali.service.UsuarioService;
+import jakarta.persistence.Tuple;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,6 +25,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -89,7 +94,7 @@ public class UsuarioController {
     @PostMapping("/livros")
     public ResponseEntity<String> adicionaLivroNaListaDeLeitura(@RequestBody LivroSelecionadoParaLeituraDto livroSelecionado) {
 
-        service.adicionaLivroNaListaDeLeitura(livroSelecionado);
+       // service.adicionaLivroNaListaDeLeitura(livroSelecionado);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Dados registrados com sucesso.");
 
@@ -120,6 +125,13 @@ public class UsuarioController {
     @ExceptionHandler(PontuacaoJaGeradaParaEsteLivroException.class)
     private ResponseEntity<Object> pontuacaoJaGeradaParaEsteLivro(PontuacaoJaGeradaParaEsteLivroException exception){
         return ResponseEntity.status(BAD_REQUEST).body(exception.getMessage());
+    }
+
+    @GetMapping("/{id}/trofeus")
+    public ResponseEntity<List<Trofeu>> adicionaarTrofeuAoUsuario(@PathVariable int id){
+        List<Trofeu> listaTrofeus = new ArrayList<>();
+        listaTrofeus = service.retornarTrofeuDeUsuario(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(listaTrofeus);
     }
 
 

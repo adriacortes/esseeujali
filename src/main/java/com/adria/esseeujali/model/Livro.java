@@ -8,6 +8,12 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Livro {
@@ -24,6 +30,12 @@ public class Livro {
     @Column(name = "genero")
     @Enumerated(EnumType.STRING)
     private GeneroEnum genero;
+
+//    @ManyToMany
+//    @JoinTable(name = "livro_selecionado_para_leitura",
+//            joinColumns = {@JoinColumn(name = "livro_id")},
+//            inverseJoinColumns = {@JoinColumn(name = "usuario_id")})
+//    private Set<Usuario> usuarios = new HashSet<>();
 
     public Livro() {
 

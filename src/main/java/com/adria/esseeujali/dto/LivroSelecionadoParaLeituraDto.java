@@ -13,6 +13,7 @@ public class LivroSelecionadoParaLeituraDto {
     private int idLivro;
     private boolean lido;
 
+
     public LivroSelecionadoParaLeituraDto() {
 
     }
@@ -56,4 +57,6 @@ public class LivroSelecionadoParaLeituraDto {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+
 }
