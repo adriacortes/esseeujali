@@ -22,6 +22,6 @@ public interface LivroSelecionadoParaLeituraRepository extends JpaRepository<Liv
     Integer buscarPontosUsuario(int id);
 
     @Query("SELECT new com.adria.esseeujali.model.RankingPontuacao(us.nome) FROM LivroSelecionadoParaLeitura ls INNER JOIN Usuario us ON ls.livroSelecionadoPk.usuarioId = us.id" +
-            " GROUP BY us.id")
+            " GROUP BY us.nome")
     List<RankingPontuacao> buscarPontosTodosUsuarios();
 }

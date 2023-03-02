@@ -67,6 +67,8 @@ public class UsuarioController {
     private ResponseEntity<UsuarioDto> verificaSeJaTemUsuarioRegistradoPeloEmail(Usuario usuario) {
         Usuario existeUsuario = service.findByemail(usuario);
         if (existeUsuario != null) {
+            existeUsuario.setId(0);
+            existeUsuario.setEmail("Jà existe um usuario com esse email");
             return ResponseEntity.status(HttpStatus.CONFLICT).body(usuarioMapper.toDto(existeUsuario));
         }
         return null;
