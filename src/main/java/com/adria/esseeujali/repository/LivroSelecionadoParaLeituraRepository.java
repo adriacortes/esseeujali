@@ -21,6 +21,7 @@ public interface LivroSelecionadoParaLeituraRepository extends JpaRepository<Liv
     @Query(value = "SELECT sum(pontuacao) FROM livro_selecionado_para_leitura ls WHERE ls.usuario_id= :id", nativeQuery = true)
     Integer buscarPontosUsuario(int id);
 
-    @Query("SELECT us.nome FROM LivroSelecionadoParaLeitura ls INNER JOIN Usuario us ON ls.livroSelecionadoPk.usuarioId = us.id")
+    @Query("SELECT us.nome FROM LivroSelecionadoParaLeitura ls INNER JOIN Usuario us ON ls.livroSelecionadoPk.usuarioId = us.id" +
+            " GROUP BY us.id")
     List<RankingPontuacao> buscarPontosTodosUsuarios();
 }
