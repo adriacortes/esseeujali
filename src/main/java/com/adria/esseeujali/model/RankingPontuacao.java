@@ -10,6 +10,14 @@ public class RankingPontuacao {
     public RankingPontuacao() {
     }
 
+    public RankingPontuacao(String nome) {
+        this.nome = nome;
+    }
+
+    public RankingPontuacao(Integer pontosLeitura) {
+        this.pontosLeitura = pontosLeitura;
+    }
+
     public RankingPontuacao(String nome, Integer pontosLeitura) {
         this.nome = nome;
         this.pontosLeitura = pontosLeitura;

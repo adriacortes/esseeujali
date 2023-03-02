@@ -64,6 +64,7 @@ public class UsuarioService {
 
         lista.setUsuario(usuario);
         lista.setLivro(livro);
+        lista.setPontuacao(0);
 
         livroSelecionadoParaLeituraRepository.save(lista);
 
