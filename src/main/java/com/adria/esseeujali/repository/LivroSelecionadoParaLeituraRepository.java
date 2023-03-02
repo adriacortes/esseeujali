@@ -10,11 +10,11 @@ import java.util.List;
 
 public interface LivroSelecionadoParaLeituraRepository extends JpaRepository<LivroSelecionadoParaLeitura, LivroSelecionadoPK> {
 
-//    @Query(value = "SELECT l.genero,count(*) as total FROM livro_selecionado_para_leitura ll inner join livro l on ll.id_livro = l.id \n" +
-//            "where ll.id_usuario=:id" +
-//            " group by l.genero having total > 5",nativeQuery = true)
-
-    @Query("SELECT l FROM LivroSelecionadoParaLeitura l INNER JOIN Livro li ON l.livroSelecionadoPk.livroId = li.id")
+    @Query("SELECT new com.adria.esseeujali.model.Trofeu(li.genero,1) FROM LivroSelecionadoParaLeitura l " +
+            " INNER JOIN Livro li ON l.livroSelecionadoPk.livroId = li.id" +
+            " WHERE l.livroSelecionadoPk.usuarioId = :id" +
+            " GROUP BY li.genero HAVING COUNT(li) >= 5 "
+    )
     List<Trofeu> buscarTrofeuDoUsuario(int id);
 
 }
