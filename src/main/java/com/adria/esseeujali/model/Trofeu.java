@@ -7,19 +7,18 @@ import java.util.Objects;
 
 public class Trofeu {
     private String genero;
-    private int total;
+
 
     public Trofeu() {
     }
 
-    public Trofeu(String genero, int total) {
+    public Trofeu(String genero) {
         this.genero = genero;
-        this.total = total;
+
     }
 
-    public Trofeu(GeneroEnum generoEnum, int total) {
+    public Trofeu(GeneroEnum generoEnum) {
         this.genero = generoEnum.getDescricao();
-        this.total = total;
     }
 
     public String getGenero() {
@@ -30,32 +29,17 @@ public class Trofeu {
         this.genero = genero;
     }
 
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Trofeu trofeu = (Trofeu) o;
-        return total == trofeu.total && Objects.equals(genero, trofeu.genero);
+        return Objects.equals(genero, trofeu.genero);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(genero, total);
-    }
-
-    @Override
-    public String toString() {
-        return "Trofeu{" +
-                "genero='" + genero + '\'' +
-                ", total=" + total +
-                '}';
+        return Objects.hash(genero);
     }
 }
