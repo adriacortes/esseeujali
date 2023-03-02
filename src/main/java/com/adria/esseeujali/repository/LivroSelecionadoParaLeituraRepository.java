@@ -16,5 +16,7 @@ public interface LivroSelecionadoParaLeituraRepository extends JpaRepository<Liv
             " GROUP BY li.genero HAVING COUNT(li) >= 5 "
     )
     List<Trofeu> buscarTrofeuDoUsuario(int id);
-
+    
+    @Query(value = "SELECT sum(pontuacao) FROM livro_selecionado_para_leitura ls WHERE ls.usuario_id= :id", nativeQuery = true)
+    Integer buscarPontosUsuario(int id);
 }

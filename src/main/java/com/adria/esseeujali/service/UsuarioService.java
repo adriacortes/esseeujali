@@ -111,8 +111,11 @@ public class UsuarioService {
     public List<Trofeu> retornarTrofeuDeUsuario(int id) {
         List<Trofeu> listaTrofeus;
         listaTrofeus = livroSelecionadoParaLeituraRepository.buscarTrofeuDoUsuario(id);
-        
+
         return listaTrofeus;
     }
 
+    public Integer retornarPontosDoUsuario(int id) {
+        return livroSelecionadoParaLeituraRepository.buscarPontosUsuario(id);
+    }
 }

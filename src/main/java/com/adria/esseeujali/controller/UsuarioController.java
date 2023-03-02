@@ -128,11 +128,16 @@ public class UsuarioController {
         return ResponseEntity.status(BAD_REQUEST).body(exception.getMessage());
     }
 
-    @GetMapping("/{id}/trofeus")
+    @GetMapping("/{id}/areadousuario/trofeus")
     public ResponseEntity<List<Trofeu>> adicionaarTrofeuAoUsuario(@PathVariable int id) {
         List<Trofeu> listaTrofeus;
         listaTrofeus = service.retornarTrofeuDeUsuario(id);
         return ResponseEntity.status(HttpStatus.CREATED).body(listaTrofeus);
+    }
+
+    @GetMapping("/{id}/areadousuario")
+    public ResponseEntity<Integer> pontuacaoDeUmUsuarioEspecifico(@PathVariable int id) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.retornarPontosDoUsuario(id));
     }
 
 
