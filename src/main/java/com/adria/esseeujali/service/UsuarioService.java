@@ -8,6 +8,7 @@ import com.adria.esseeujali.exception.livroNaoEncontradoException;
 import com.adria.esseeujali.model.Livro;
 import com.adria.esseeujali.model.LivroSelecionadoPK;
 import com.adria.esseeujali.model.LivroSelecionadoParaLeitura;
+import com.adria.esseeujali.model.RankingPontuacao;
 import com.adria.esseeujali.model.Trofeu;
 import com.adria.esseeujali.model.Usuario;
 import com.adria.esseeujali.repository.LivroRepository;
@@ -117,5 +118,11 @@ public class UsuarioService {
 
     public Integer retornarPontosDoUsuario(int id) {
         return livroSelecionadoParaLeituraRepository.buscarPontosUsuario(id);
+    }
+
+    public List<RankingPontuacao> retornarPontoDosUsuarios() {
+        List<RankingPontuacao> rankingGeral = null;
+        rankingGeral = livroSelecionadoParaLeituraRepository.buscarPontosTodosUsuarios();
+        return rankingGeral;
     }
 }

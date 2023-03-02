@@ -8,6 +8,7 @@ import com.adria.esseeujali.exception.UsuarioSemLivroNaListaDeLeituraException;
 import com.adria.esseeujali.exception.livroNaoEncontradoException;
 import com.adria.esseeujali.mapper.UsuarioMapper;
 import com.adria.esseeujali.model.LivroSelecionadoParaLeitura;
+import com.adria.esseeujali.model.RankingPontuacao;
 import com.adria.esseeujali.model.Trofeu;
 import com.adria.esseeujali.model.Usuario;
 import com.adria.esseeujali.repository.UsuarioRepository;
@@ -138,6 +139,12 @@ public class UsuarioController {
     @GetMapping("/{id}/areadousuario")
     public ResponseEntity<Integer> pontuacaoDeUmUsuarioEspecifico(@PathVariable int id) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.retornarPontosDoUsuario(id));
+    }
+
+    @GetMapping("/{id}/areadousuario/ranking")
+    public ResponseEntity<List<RankingPontuacao>> pontuacaoGeralDeTodosOsUsuarios() {
+        List<RankingPontuacao> rankingGeral = service.retornarPontoDosUsuarios();
+        return ResponseEntity.status(HttpStatus.CREATED).body(rankingGeral);
     }
 
 
