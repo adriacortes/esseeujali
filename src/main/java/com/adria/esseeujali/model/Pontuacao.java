@@ -13,6 +13,7 @@ public class Pontuacao {
         this.pontos = pontos;
     }
 
+
     public Integer getPontos() {
         return pontos;
     }

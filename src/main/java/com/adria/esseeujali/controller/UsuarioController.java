@@ -1,6 +1,8 @@
 package com.adria.esseeujali.controller;
 
 import com.adria.esseeujali.dto.LivroSelecionadoParaLeituraDto;
+import com.adria.esseeujali.dto.MeusTitulosDto;
+import com.adria.esseeujali.dto.RankingPontuacaoDto;
 import com.adria.esseeujali.dto.UsuarioDto;
 import com.adria.esseeujali.exception.PontuacaoJaGeradaParaEsteLivroException;
 import com.adria.esseeujali.exception.UsuarioNaoEncontradoException;
@@ -8,7 +10,6 @@ import com.adria.esseeujali.exception.UsuarioSemLivroNaListaDeLeituraException;
 import com.adria.esseeujali.exception.livroNaoEncontradoException;
 import com.adria.esseeujali.mapper.UsuarioMapper;
 import com.adria.esseeujali.model.LivroSelecionadoParaLeitura;
-import com.adria.esseeujali.model.RankingPontuacao;
 import com.adria.esseeujali.model.Trofeu;
 import com.adria.esseeujali.model.Usuario;
 import com.adria.esseeujali.repository.UsuarioRepository;
@@ -144,9 +145,16 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}/areadousuario/ranking")
-    public ResponseEntity<List<RankingPontuacao>> pontuacaoGeralDeTodosOsUsuarios() {
-        List<RankingPontuacao> rankingGeral = service.retornarPontoDosUsuarios();
+    public ResponseEntity<List<RankingPontuacaoDto>> ranking() {
+        List<RankingPontuacaoDto> rankingGeral = service.ranking();
         return ResponseEntity.status(HttpStatus.CREATED).body(rankingGeral);
+    }
+
+    @GetMapping("/{id}/areadousuario/meuslivros")
+    public ResponseEntity<List<MeusTitulosDto>> meusLivrosParaLeitura(@PathVariable int id) {
+        List<MeusTitulosDto> meusLivros = service.minhaListaLeitura(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(meusLivros);
+
     }
 
 

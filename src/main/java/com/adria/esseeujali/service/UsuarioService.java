@@ -1,6 +1,8 @@
 package com.adria.esseeujali.service;
 
 import com.adria.esseeujali.dto.LivroSelecionadoParaLeituraDto;
+import com.adria.esseeujali.dto.MeusTitulosDto;
+import com.adria.esseeujali.dto.RankingPontuacaoDto;
 import com.adria.esseeujali.exception.PontuacaoJaGeradaParaEsteLivroException;
 import com.adria.esseeujali.exception.UsuarioNaoEncontradoException;
 import com.adria.esseeujali.exception.UsuarioSemLivroNaListaDeLeituraException;
@@ -8,7 +10,6 @@ import com.adria.esseeujali.exception.livroNaoEncontradoException;
 import com.adria.esseeujali.model.Livro;
 import com.adria.esseeujali.model.LivroSelecionadoPK;
 import com.adria.esseeujali.model.LivroSelecionadoParaLeitura;
-import com.adria.esseeujali.model.RankingPontuacao;
 import com.adria.esseeujali.model.Trofeu;
 import com.adria.esseeujali.model.Usuario;
 import com.adria.esseeujali.repository.LivroRepository;
@@ -121,9 +122,15 @@ public class UsuarioService {
         return livroSelecionadoParaLeituraRepository.buscarPontosUsuario(id);
     }
 
-    public List<RankingPontuacao> retornarPontoDosUsuarios() {
-        List<RankingPontuacao> rankingGeral = null;
-        rankingGeral = livroSelecionadoParaLeituraRepository.buscarPontosTodosUsuarios();
+    public List<RankingPontuacaoDto> ranking() {
+        List<RankingPontuacaoDto> rankingGeral;
+        rankingGeral = livroSelecionadoParaLeituraRepository.ranking();
         return rankingGeral;
+    }
+
+    public List<MeusTitulosDto> minhaListaLeitura(int id) {
+        List<MeusTitulosDto> meusLivros;
+        meusLivros = livroSelecionadoParaLeituraRepository.minhaListaDeLeitura(id);
+        return meusLivros;
     }
 }

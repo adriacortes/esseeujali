@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin("*")
 @RestController
-@RequestMapping("esseeujali")
+@RequestMapping("livros")
 public class LivroController {
 
     @Autowired
@@ -30,21 +31,27 @@ public class LivroController {
     public LivroController() {
 
     }
+
     public LivroController(LivroService service, LivroMapper livroMapper) {
         this.service = service;
         this.livroMapper = livroMapper;
     }
 
-    @PostMapping("/livros")
-    public ResponseEntity<LivroDto> cadastrar(@RequestBody LivroDto livroDto){
+    @PostMapping("")
+    public ResponseEntity<LivroDto> cadastrar(@RequestBody LivroDto livroDto) {
         Livro livro = livroMapper.toEntity(livroDto);
         livro = service.cadastrar(livro);
         return ResponseEntity.status(HttpStatus.CREATED).body(livroMapper.toDto(livro));
     }
 
-    @GetMapping("/livros")
-    public ResponseEntity<List<Livro>> listarTodosOsLivros(){
+    @GetMapping("")
+    public ResponseEntity<List<Livro>> listarTodosOsLivros() {
         return ResponseEntity.ok(this.service.listarTodosOSLivros().stream().collect(Collectors.toList()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Livro> buscarLivroPorID(@PathVariable int id) {
+        return ResponseEntity.ok(this.service.findById(id));
     }
 
 }
